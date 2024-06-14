@@ -4,6 +4,11 @@ import { provideRouter, withInMemoryScrolling, withRouterConfig } from '@angular
 import { routes } from './app.routes';
 import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
 import { provideAnimations } from '@angular/platform-browser/animations';
+import { provideHttpClient, withFetch } from '@angular/common/http';
+import { provideState, provideStore } from '@ngrx/store';
+import { EmployeeReducer } from './shared/states/employee/employee.reducer';
+import { provideEffects } from '@ngrx/effects';
+import { EmployeeEffect } from './shared/states/employee/employee.effect';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -22,7 +27,11 @@ export const appConfig: ApplicationConfig = {
       BrowserModule,
     ),
     provideAnimations(),
-    provideClientHydration()
+    provideClientHydration(),
+    provideHttpClient(withFetch()),
+    provideStore(),
+    provideState({ name: 'employee', reducer: EmployeeReducer }),
+    provideEffects(EmployeeEffect),
   ]
 };
 

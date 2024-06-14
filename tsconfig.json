@@ -29,6 +29,8 @@
       "@forms/*": ["src/app/shared/components/forms/*"],
       "@services/*": ["src/app/shared/services/*"],
       "@helpers/*": ["src/app/shared/helpers/*"],
+      "@states/*": ["src/app/shared/states/*"],
+      "@table/*": ["src/app/shared/components/table/*"],
     }
   },
   "angularCompilerOptions": {
