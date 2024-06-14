@@ -3,6 +3,7 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
+    "baseUrl": "./",
     "outDir": "./dist/out-tsc",
     "strict": true,
     "noImplicitOverride": true,
@@ -22,7 +23,13 @@
     "lib": [
       "ES2022",
       "dom"
-    ]
+    ],
+    "paths": {
+      "@layouts/*": ["src/app/shared/components/layouts/*"],
+      "@forms/*": ["src/app/shared/components/forms/*"],
+      "@services/*": ["src/app/shared/services/*"],
+      "@helpers/*": ["src/app/shared/helpers/*"],
+    }
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
