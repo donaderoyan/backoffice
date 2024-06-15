@@ -16,6 +16,11 @@ interface Column {
     field: string
     header: string
 }
+interface Option { 
+    label: string, 
+    value: string 
+}
+
 
 @Component({
     selector: 'table-component',
@@ -29,7 +34,10 @@ export class TableComponent implements OnInit {
     @ViewChild('dt') dt: Table | undefined;
     // representatives!: Representative[];
     
-    statuses!: any[];
+    statuses!: Option[] | undefined;
+    selectedStatuses: any | undefined;
+    grup!: Option[] | undefined;
+    selectedGrup: any | undefined;
 
     loading: boolean = true;
 
@@ -54,9 +62,23 @@ export class TableComponent implements OnInit {
                     }
                 }
             });
-            this.loading = false
             return acc
         }, [])
+
+        this.statuses = [
+            { label: 'Active', value: 'active' },
+            { label: 'Inactive', value: 'inactive' }
+        ];
+
+        
+        this.grup = [...new Set(this.employees.map(employee => employee.group))].map(group => {
+            if (group) {
+                return { label: group, value: group };
+            }
+            return {label: "No Group", value: "-"}
+        }).filter(Boolean);
+
+        this.loading = false
     }
 
     // Pagination
@@ -94,6 +116,18 @@ export class TableComponent implements OnInit {
     // filter
     clear(table: Table) {
         table.clear();
+        this.selectedStatuses = ''
         this.searchValue = ''
+        this.selectedGrup = ''
+    }
+    getSeverity(status: string) {
+        switch (status.toLowerCase()) {
+            case 'inactive':
+                return 'danger'
+            case 'active':
+                return 'success'
+            default:
+                return undefined
+        }
     }
 }

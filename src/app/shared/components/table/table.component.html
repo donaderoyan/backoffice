@@ -29,7 +29,52 @@
         <ng-template pTemplate="header" let-columns>
             <tr>
                 <th *ngFor="let col of columns" [pSortableColumn]="col.field">
-                    {{ col.header }} <p-sortIcon field="col.field" />
+
+                    <ng-container *ngIf="col.field === 'status'">
+                        <p-sortIcon [field]="col.field" class="mr-2"/>
+                        {{ col.header }} 
+                        <p-columnFilter [field]="col.field" matchMode="equals" display="menu">
+                            <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                                <p-dropdown [(ngModel)]="selectedStatuses" [options]="statuses" (onChange)="filter($event.value)" placeholder="">
+                                    <ng-template let-option pTemplate="item">
+                                        <p-tag [value]="option.value" [severity]="getSeverity(option.label)" />
+                                    </ng-template>
+                                </p-dropdown>
+                            </ng-template>
+                        </p-columnFilter>
+                    </ng-container>
+
+                    <ng-container *ngIf="col.field === 'group'">
+                        <p-sortIcon [field]="col.field" class="mr-2"/>
+                        {{ col.header }} 
+                        <p-columnFilter [field]="col.field" matchMode="equals" display="menu">
+                            <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                                <p-dropdown [(ngModel)]="selectedGrup" [options]="grup" (onChange)="filter($event.value)" placeholder="">
+                                    <ng-template let-option pTemplate="item">
+                                        {{option.label}}
+                                    </ng-template>
+                                </p-dropdown>
+                            </ng-template>
+                        </p-columnFilter>
+                    </ng-container>
+
+                    <ng-container *ngIf="col.field === 'basicSalary'">
+                        <p-sortIcon [field]="col.field" class="mr-2"/>
+                        {{ col.header }} 
+                        <p-columnFilter type="numeric" [field]="col.field" display="menu" currency="IDR" />
+                    </ng-container>
+
+                    <ng-container *ngIf="col.field === 'birthDate'">
+                        <p-sortIcon [field]="col.field" class="mr-2"/>
+                        {{ col.header }} 
+                        <p-columnFilter type="date" [field]="col.field" display="menu" />
+                    </ng-container>
+
+                    <ng-container class="flex align-items-center" *ngIf="col.field !== 'status' && col.field !== 'group' && col.field !== 'basicSalary' && col.field !== 'birthDate'">
+                        <p-sortIcon [field]="col.field" class="mr-2"/>
+                        {{ col.header }} 
+                        <p-columnFilter type="text" [field]="col.field" display="menu" />
+                    </ng-container>
                 </th>
             </tr>
         </ng-template>
@@ -46,10 +91,14 @@
                         <ng-container *ngIf="col.field === 'basicSalary'">
                             {{ formatCurrency(rowData[col.field]) }}
                         </ng-container>
+                        <ng-container *ngIf="col.field !== 'status'"></ng-container>
                         <ng-container *ngIf="col.field === 'birthDate'">
                             {{ formatDate(rowData[col.field]) }}
                         </ng-container>
-                        <ng-container *ngIf="col.field !== 'basicSalary' && col.field !== 'birthDate'">
+                        <ng-container *ngIf="col.field === 'status'">
+                            <p-tag [value]="rowData[col.field]" [severity]="getSeverity(rowData[col.field])" />
+                        </ng-container>
+                        <ng-container *ngIf="col.field !== 'basicSalary' && col.field !== 'birthDate' && col.field !== 'status'">
                             {{ rowData[col.field] }}
                         </ng-container>
                     </ng-container>
@@ -62,5 +111,12 @@
         <ng-template pTemplate="paginatorright">
             <p-button type="button" icon="pi pi-cloud" styleClass="p-button-text" />
         </ng-template>
+
+        <ng-template pTemplate="emptymessage">
+            <tr>
+                <td colspan="5">No employees found.</td>
+            </tr>
+        </ng-template>
+
     </p-table>
 </p-card>
