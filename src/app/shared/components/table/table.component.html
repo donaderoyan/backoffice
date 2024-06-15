@@ -1,7 +1,7 @@
 <p-card>
     <p-table 
         #dt1
-        [loading]="loading"
+        sortMode="multiple"
         [scrollable]="true" 
         [resizableColumns]="true" 
         columnResizeMode="expand" 
@@ -16,7 +16,10 @@
         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
         (onPage)="pageChange($event)"
         [rowsPerPageOptions]="[10, 25, 50]"
-        [globalFilterFields]="['username', 'firstName', 'lastName', 'email', 'description', 'status', 'group', 'basicSalary', 'birthDate']">
+        [globalFilterFields]="['username', 'firstName', 'lastName', 'email', 'description', 'status', 'group', 'basicSalary', 'birthDate']"
+        
+        >
+        
         <ng-template pTemplate="caption">
             <div class="flex xs:flex-wrap md:flex-nowrap md:justify-between">
                 <p-button size="small" label="Clear" [outlined]="true" icon="pi pi-filter-slash" (click)="clear(dt1)" class="xs:w-full md:w-auto mt-2" />
@@ -26,6 +29,7 @@
                 </span>
             </div>
         </ng-template>
+
         <ng-template pTemplate="header" let-columns>
             <tr>
                 <th *ngFor="let col of columns" [pSortableColumn]="col.field">
@@ -79,7 +83,8 @@
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-rowData let-columns="columns">
-            <tr>
+
+            <tr *ngIf="isLoading === false">
                 <td *ngFor="let col of columns">
                     <ng-container *ngIf="col.field === 'username'">
                         <div class="flex justify-start">

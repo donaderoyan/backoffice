@@ -5,16 +5,9 @@
           <h1>Can't get data employee {{error}}</h1>
         }@else {
 
-          <table-component [employees]="employeesValue"/>
+          <table-component [employees]="employeesValue" [isLoading]="loading"/>
 
-          <!-- @for (org of employees$ | async; track $index) {
-            <div>
-              <p>user name {{org.username}}</p>
-              <p>birth day {{org.birthDate}}</p>
-            </div>
-          } -->
         }
-
       </div>
   </div>
 </app-page-layout>

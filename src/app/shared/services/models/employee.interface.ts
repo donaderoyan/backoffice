@@ -14,3 +14,4 @@ export interface Employee {
         "thumbnail": string
     }
 }
+

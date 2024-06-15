@@ -1,6 +1,6 @@
 import { CommonModule } from "@angular/common";
 import { FormsModule } from '@angular/forms';
-import { Component, Input, OnInit, ViewChild } from "@angular/core";
+import { Component, Input, OnInit, SimpleChanges, ViewChild } from "@angular/core";
 import { Employee } from "@services/models/employee.interface";
 import { ButtonModule } from "primeng/button";
 import { TableModule, Table } from 'primeng/table';
@@ -10,7 +10,7 @@ import { TagModule } from 'primeng/tag';
 import { DropdownModule } from "primeng/dropdown";
 import { MultiSelectModule } from 'primeng/multiselect';
 import { ProgressBarModule } from 'primeng/progressbar';
-import { HttpClientModule } from "@angular/common/http";
+import { SkeletonModule } from 'primeng/skeleton';
 
 interface Column {
     field: string
@@ -26,11 +26,12 @@ interface Option {
     selector: 'table-component',
     templateUrl: './table.component.html',
     standalone: true,
-    imports: [CommonModule, FormsModule, HttpClientModule, TableModule, ButtonModule, CardModule, InputTextModule, TagModule, 
-        DropdownModule, MultiSelectModule, ProgressBarModule]
+    imports: [CommonModule, FormsModule, TableModule, ButtonModule, CardModule, InputTextModule, TagModule, 
+        DropdownModule, MultiSelectModule, ProgressBarModule, SkeletonModule]
 })
 export class TableComponent implements OnInit {
     @Input() employees!: Employee[]
+    @Input() isLoading!: boolean
     @ViewChild('dt') dt: Table | undefined;
     // representatives!: Representative[];
     
@@ -52,18 +53,8 @@ export class TableComponent implements OnInit {
     rows = 10
 
     constructor() {}
-
     ngOnInit() {
-        this.cols = this.employees.reduce<Column[]>((acc, employee) => {
-            Object.keys(employee).forEach(key => {
-                if (!acc.find(col => col.field === key)) {
-                    if(key != 'picture') {
-                        acc.push({ field: key, header: key.charAt(0).toUpperCase() + key.slice(1) });
-                    }
-                }
-            });
-            return acc
-        }, [])
+        this.columnsInit()
 
         this.statuses = [
             { label: 'Active', value: 'active' },
@@ -78,8 +69,21 @@ export class TableComponent implements OnInit {
             return {label: "No Group", value: "-"}
         }).filter(Boolean);
 
-        this.loading = false
     }
+    // Initialize
+    columnsInit(): void {
+        this.cols = this.employees.reduce<Column[]>((acc, employee) => {
+            Object.keys(employee).forEach(key => {
+                if (!acc.find(col => col.field === key)) {
+                    if(key != 'picture') {
+                        acc.push({ field: key, header: key.charAt(0).toUpperCase() + key.slice(1) });
+                    }
+                }
+            });
+            return acc
+        }, [])
+    }
+    
 
     // Pagination
     next() {
@@ -130,4 +134,6 @@ export class TableComponent implements OnInit {
                 return undefined
         }
     }
+
+    
 }

@@ -27,8 +27,10 @@ export class HomeComponent implements OnInit {
     http = inject(HttpClient)
     employeeApi = inject(EmployeeApiService)
     employees$!: Observable<Employee[]>
+    isLoading$!: Observable<boolean | true>
     error!: Observable<string | null>
-    employeesValue!: Employee[];
+    employeesValue!: Employee[]
+    loading!: boolean | true
 
     constructor(private store: Store<{ data: {employees: Employee[]} }>) {
         // collect data
@@ -37,6 +39,8 @@ export class HomeComponent implements OnInit {
         this.employees$.subscribe((employees: Employee[]) => {
             this.employeesValue = [...employees];
         });
+        this.isLoading$ = this.store.select(EmployeeSelectors.selectEmployeeLoading)
+        this.isLoading$.subscribe((isLoading: boolean) => { this.loading = isLoading })
         this.error = this.store.select(EmployeeSelectors.selectEmployeeError)
     }
     public ngOnInit() : void {}

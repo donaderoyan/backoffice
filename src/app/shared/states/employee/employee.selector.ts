@@ -8,6 +8,11 @@ export const selectAllEmployee = createSelector(
     (state: EmployeeState) => state.employees
 )
 
+export const selectEmployeeLoading = createSelector(
+    selectEmployeeFeature,
+    (state: EmployeeState) => state.isLoading
+)
+
 export const selectEmployeeError = createSelector(
     selectEmployeeFeature,
     (state: EmployeeState) => state.error
