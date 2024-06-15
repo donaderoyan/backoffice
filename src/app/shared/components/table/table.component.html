@@ -1,6 +1,8 @@
 <p-card>
     <p-table 
         [scrollable]="true" 
+        [resizableColumns]="true" 
+        columnResizeMode="expand" 
         scrollHeight="500px" 
         [columns]="cols" 
         [value]="employees"
@@ -12,6 +14,15 @@
         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
         (onPage)="pageChange($event)"
         [rowsPerPageOptions]="[10, 25, 50]">
+        <!-- <ng-template pTemplate="caption">
+            <div class="flex">
+                <p-button label="Clear" [outlined]="true" icon="pi pi-filter-slash" (click)="clear(dt1)" />
+                <span class="p-input-icon-left ml-auto">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" [(ngModel)]="searchValue" (input)="dt1.filterGlobal($event.target.value, 'contains')" placeholder="Search keyword" />
+                </span>
+            </div>
+        </ng-template> -->
         <ng-template pTemplate="header" let-columns>
             <tr>
                 <th *ngFor="let col of columns">
@@ -22,10 +33,13 @@
         <ng-template pTemplate="body" let-rowData let-columns="columns">
             <tr>
                 <td *ngFor="let col of columns">
-                    <ng-container *ngIf="col.field === 'picture'">
-                        <img [src]="rowData[col.field].thumbnail" [alt]="rowData[col.field].username" style="border-radius: 50%;">
+                    <ng-container *ngIf="col.field === 'username'">
+                        <div class="flex justify-start">
+                            <div><img [src]="rowData.picture.thumbnail" [alt]="rowData.username" style="border-radius: 50%; min-width: 50px; min-height: 50px;"></div>
+                            <div class="text-center ml-2 mt-3">{{ col.field === 'basicSalary' ? formatCurrency(rowData[col.field]) : rowData[col.field] }}</div>
+                        </div>
                     </ng-container>
-                    <ng-container *ngIf="col.field !== 'picture'">
+                    <ng-container *ngIf="col.field !== 'username'">
                         {{ col.field === 'basicSalary' ? formatCurrency(rowData[col.field]) : rowData[col.field] }}
                     </ng-container>
                 </td>

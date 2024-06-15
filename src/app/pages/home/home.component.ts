@@ -27,16 +27,16 @@ export class HomeComponent implements OnInit {
     http = inject(HttpClient)
     employeeApi = inject(EmployeeApiService)
     employees$!: Observable<Employee[]>
-    data!: Employee[]
     error!: Observable<string | null>
+    employeesValue!: Employee[];
 
     constructor(private store: Store<{ data: {employees: Employee[]} }>) {
         // collect data
         this.store.dispatch(EmployeeActions.loadEmployee())
-        this.employees$ = this.store.select(EmployeeSelectors.selectAllEmployee)
-        this.data = []
-        this.store.select(EmployeeSelectors.selectAllEmployee).subscribe((employees: Employee[]) => this.data = employees)
-        console.log("OOOO >> ", this.employees$)
+        this.employees$ = this.store.select(EmployeeSelectors.selectAllEmployee);
+        this.employees$.subscribe((employees: Employee[]) => {
+            this.employeesValue = employees;
+        });
         this.error = this.store.select(EmployeeSelectors.selectEmployeeError)
     }
     public ngOnInit() : void {}

@@ -17,16 +17,13 @@ export class EmployeeEffect {
             ofType(EmployeeActions.loadEmployee),
             switchMap(() => {
                 if (!this.api) {
-                    console.log('EmployeeApiService is not provided');
                     throw new Error('EmployeeApiService is not provided');
                 }
                 return this.api.getEmployee().pipe(
                     map((res) => {
-                        console.log('Employee data loaded successfully', res);
                         return EmployeeActions.loadEmployeeSuccess({ employees: res });
                     }),
                     catchError((error: { message: string }) => {
-                        console.log('Failed to load employee data', error.message);
                         return of(
                             EmployeeActions.loadEmployeeFailure({
                                 errorMessage: 'Fail to load employee',
