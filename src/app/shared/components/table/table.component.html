@@ -18,11 +18,11 @@
         [rowsPerPageOptions]="[10, 25, 50]"
         [globalFilterFields]="['username', 'firstName', 'lastName', 'email', 'description', 'status', 'group', 'basicSalary', 'birthDate']">
         <ng-template pTemplate="caption">
-            <div class="flex">
-                <p-button label="Clear" [outlined]="true" icon="pi pi-filter-slash" (click)="clear(dt1)" />
-                <span class="p-input-icon-left ml-auto">
+            <div class="flex xs:flex-wrap md:flex-nowrap md:justify-between">
+                <p-button size="small" label="Clear" [outlined]="true" icon="pi pi-filter-slash" (click)="clear(dt1)" class="xs:w-full md:w-auto mt-2" />
+                <span class="p-input-icon-left ml-auto p-col-12 p-md-10">
                     <i class="pi pi-search"></i>
-                    <input type="text" pInputText [(ngModel)]="searchValue" placeholder="Search keyword" (input)="dt1.filterGlobal($any($event.target).value, 'contains')"/>
+                    <input type="text" pInputText [(ngModel)]="searchValue" placeholder="Search keyword" (input)="dt1.filterGlobal($any($event.target).value, 'contains')" class="p-inputtext p-col-12 xs:w-full" />
                 </span>
             </div>
         </ng-template>
