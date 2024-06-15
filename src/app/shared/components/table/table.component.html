@@ -1,5 +1,7 @@
 <p-card>
     <p-table 
+        #dt1
+        [loading]="loading"
         [scrollable]="true" 
         [resizableColumns]="true" 
         columnResizeMode="expand" 
@@ -13,16 +15,17 @@
         [tableStyle]="{ 'min-width': '50rem' }"
         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
         (onPage)="pageChange($event)"
-        [rowsPerPageOptions]="[10, 25, 50]">
-        <!-- <ng-template pTemplate="caption">
+        [rowsPerPageOptions]="[10, 25, 50]"
+        [globalFilterFields]="['username', 'firstName', 'lastName', 'email', 'description', 'status', 'group', 'basicSalary', 'birthDate']">
+        <ng-template pTemplate="caption">
             <div class="flex">
                 <p-button label="Clear" [outlined]="true" icon="pi pi-filter-slash" (click)="clear(dt1)" />
                 <span class="p-input-icon-left ml-auto">
                     <i class="pi pi-search"></i>
-                    <input pInputText type="text" [(ngModel)]="searchValue" (input)="dt1.filterGlobal($event.target.value, 'contains')" placeholder="Search keyword" />
+                    <input type="text" pInputText [(ngModel)]="searchValue" placeholder="Search keyword" (input)="dt1.filterGlobal($any($event.target).value, 'contains')"/>
                 </span>
             </div>
-        </ng-template> -->
+        </ng-template>
         <ng-template pTemplate="header" let-columns>
             <tr>
                 <th *ngFor="let col of columns">
