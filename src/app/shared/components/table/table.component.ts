@@ -3,6 +3,7 @@ import { Component, Input, OnInit } from "@angular/core";
 import { Employee } from "@services/models/employee.interface";
 import { ButtonModule } from "primeng/button";
 import { TableModule } from 'primeng/table';
+import { CardModule } from 'primeng/card';
 
 interface Column {
     field: string
@@ -13,7 +14,7 @@ interface Column {
     selector: 'table-component',
     templateUrl: './table.component.html',
     standalone: true,
-    imports: [CommonModule, TableModule, ButtonModule]
+    imports: [CommonModule, TableModule, ButtonModule, CardModule]
 })
 export class TableComponent implements OnInit {
     @Input() employees!: Employee[];
@@ -63,4 +64,8 @@ export class TableComponent implements OnInit {
     isFirstPage(): boolean {
         return this.employees ? this.first === 0 : true
     }
+
+    formatCurrency(value: number) {
+        return value.toLocaleString('en-US', { style: 'currency', currency: 'IDR' });
+    } 
 }

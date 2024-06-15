@@ -1,4 +1,4 @@
-<div class="w-full overflow-auto">
+<p-card>
     <p-table 
         [scrollable]="true" 
         scrollHeight="500px" 
@@ -26,7 +26,7 @@
                         <img [src]="rowData[col.field].thumbnail" [alt]="rowData[col.field].username" style="border-radius: 50%;">
                     </ng-container>
                     <ng-container *ngIf="col.field !== 'picture'">
-                        {{ rowData[col.field] }}
+                        {{ col.field === 'basicSalary' ? formatCurrency(rowData[col.field]) : rowData[col.field] }}
                     </ng-container>
                 </td>
             </tr>
@@ -38,4 +38,4 @@
             <p-button type="button" icon="pi pi-cloud" styleClass="p-button-text" />
         </ng-template>
     </p-table>
-</div>
+</p-card>
