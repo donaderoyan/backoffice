@@ -35,7 +35,7 @@ export class HomeComponent implements OnInit {
         this.store.dispatch(EmployeeActions.loadEmployee())
         this.employees$ = this.store.select(EmployeeSelectors.selectAllEmployee);
         this.employees$.subscribe((employees: Employee[]) => {
-            this.employeesValue = employees;
+            this.employeesValue = [...employees];
         });
         this.error = this.store.select(EmployeeSelectors.selectEmployeeError)
     }

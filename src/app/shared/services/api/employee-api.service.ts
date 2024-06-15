@@ -21,7 +21,7 @@ export class EmployeeApiService {
                         firstName: employee.name.first,
                         lastName: employee.name.last,
                         email: employee.email,
-                        birthDate: new Date(employee.dob.date).toLocaleDateString('en-GB'),
+                        birthDate: employee.dob.date,
                         basicSalary: Math.round((Math.random() * (15 - 5) + 5) * 1000000), // untuk Rp (random decimal number antara 5 - 15) x 1000.0000 
                         status: Math.round(Math.random()) ? 'active' : 'inactive', // random 0 atau 1 
                         group: employee.id.name,

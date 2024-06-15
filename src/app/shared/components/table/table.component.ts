@@ -87,6 +87,9 @@ export class TableComponent implements OnInit {
         return value.toLocaleString('en-US', { style: 'currency', currency: 'IDR' });
     } 
 
+    formatDate(value: Date) {
+        return new Date(value).toLocaleDateString('en-GB')
+    }
 
     // filter
     clear(table: Table) {

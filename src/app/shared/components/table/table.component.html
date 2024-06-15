@@ -28,8 +28,8 @@
         </ng-template>
         <ng-template pTemplate="header" let-columns>
             <tr>
-                <th *ngFor="let col of columns">
-                    {{ col.header }}
+                <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+                    {{ col.header }} <p-sortIcon field="col.field" />
                 </th>
             </tr>
         </ng-template>
@@ -43,7 +43,15 @@
                         </div>
                     </ng-container>
                     <ng-container *ngIf="col.field !== 'username'">
-                        {{ col.field === 'basicSalary' ? formatCurrency(rowData[col.field]) : rowData[col.field] }}
+                        <ng-container *ngIf="col.field === 'basicSalary'">
+                            {{ formatCurrency(rowData[col.field]) }}
+                        </ng-container>
+                        <ng-container *ngIf="col.field === 'birthDate'">
+                            {{ formatDate(rowData[col.field]) }}
+                        </ng-container>
+                        <ng-container *ngIf="col.field !== 'basicSalary' && col.field !== 'birthDate'">
+                            {{ rowData[col.field] }}
+                        </ng-container>
                     </ng-container>
                 </td>
             </tr>
