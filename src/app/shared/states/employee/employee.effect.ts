@@ -24,8 +24,7 @@ export class EmployeeEffect {
                 this.store$.dispatch(EmployeeActions.loadEmployeeLoading({isLoading: true}));
                 return this.api.getEmployee().pipe(
                     map((res) => {
-                        // this.store$.dispatch(EmployeeActions.loadEmployeeLoading({isLoading: false}));
-                        setTimeout(() => this.store$.dispatch(EmployeeActions.loadEmployeeLoading({isLoading: false})), 1000);
+                        this.store$.dispatch(EmployeeActions.loadEmployeeLoading({isLoading: false}));
                         return EmployeeActions.loadEmployeeSuccess({ employees: res });
                     }),
                     catchError((error: { message: string }) => {

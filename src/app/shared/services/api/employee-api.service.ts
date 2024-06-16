@@ -1,4 +1,5 @@
 import { HttpClient } from "@angular/common/http";
+import {v4 as uuidv4} from 'uuid';
 import { Injectable, inject } from "@angular/core";
 import { map } from 'rxjs';
 import { Employee } from "@services/models/employee.interface";
@@ -17,6 +18,7 @@ export class EmployeeApiService {
             map(((response: any) => {
                 return response.results.map((employee: any) => {
                     const transformedEmployee: Employee = {
+                        _id: uuidv4(),
                         username: employee["login"] ? employee["login"]["username"] : '',
                         firstName: employee.name.first,
                         lastName: employee.name.last,
@@ -30,7 +32,7 @@ export class EmployeeApiService {
                             large: employee.picture.large,
                             medium: employee.picture.medium,
                             thumbnail: employee.picture.thumbnail
-                        }
+                        },
                     }
                     return transformedEmployee;
                 })
