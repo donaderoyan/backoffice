@@ -4,7 +4,7 @@ export interface Employee {
     "firstName": string,
     "lastName": string,
     "email": string,
-    "birthDate": Date,
+    "birthDate": any,
     "basicSalary": number,
     "status": string,
     "group": string,

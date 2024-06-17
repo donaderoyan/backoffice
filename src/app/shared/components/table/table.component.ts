@@ -58,6 +58,10 @@ export class TableComponent implements OnInit {
 
     constructor(private changeDetectorRefs: ChangeDetectorRef) {}
     ngOnInit(): void {
+        // cache searchValue
+        if (typeof window !== 'undefined') {
+            this.searchValue = window.sessionStorage.getItem('searchData') || '';
+        }
         this.initializeTable()
     }
     // Initialize
@@ -127,6 +131,15 @@ export class TableComponent implements OnInit {
         this.selectedStatuses = ''
         this.searchValue = ''
         this.selectedGrup = ''
+    }
+    searchingTable(table: Table, val: any) {
+        
+            table.filterGlobal(val, 'contains')
+            // const sessionData = sessionStorage.getItem('table-session');
+            // const sessionObj = sessionData ? JSON.parse(sessionData) : {};
+            // sessionStorage.setItem('table-session', JSON.stringify({ ...sessionObj, searchData: val }));
+            window.sessionStorage.setItem('searchData', val);
+        
     }
     getSeverity(status: string) {
         switch (status.toLowerCase()) {

@@ -10,36 +10,171 @@
     (onHide)="onHide()">
     <ng-template pTemplate="header">
         <div class="inline-flex align-items-center justify-content-center gap-2">
-            <!-- <p-avatar 
+            <p-avatar 
                 [image]="employee.picture.thumbnail"
-                shape="circle" /> -->
+                shape="circle" />
             <span class="font-bold white-space-nowrap">
-                <!-- {{ employee.username }} -->
+                {{ employee.username }}
             </span>
         </div>
     </ng-template>
-    <span class="p-text-secondary block mb-5">Update your information.</span>
-    <div class="flex align-items-center gap-3 mb-3">
-        <label for="username" class="font-semibold w-6rem">
-            Username
-        </label>
-        <input pInputText id="username" class="flex-auto" autocomplete="off" />
-    </div>
-    <div class="flex align-items-center gap-3 mb-5">
-        <label for="email" class="font-semibold w-6rem">Email</label>
-        <input pInputText id="email" class="flex-auto" autocomplete="off" />
-    </div>
-    <ng-template pTemplate="footer">
-        <p-button 
-            label="Cancel" 
-            [text]="true" 
-            severity="secondary" 
-            (click)="visible = false" />
-        <p-button 
-            label="Save" 
-            [outlined]="true" 
-            severity="secondary" 
-            (click)="visible = false" 
-          />
-    </ng-template>
+    
+    <form [formGroup]="formGroup" (ngSubmit)="saveData()">
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-left">
+            <!-- NOTE First Name -->
+            <div class="mb-3 w-full">
+                <label for="firstName" class="form-label text-start w-full block">{{ 'FIRST NAME' }}</label>
+                <input 
+                    pInputText 
+                    [ngClass]="{'ng-invalid ng-dirty' : formGroup.controls.firstName.errors && formGroup.controls.firstName.touched}"
+                    formControlName="firstName" 
+                    class="w-full"
+                />
+                <small id="firstName-help" class="text-red-500 block" *ngIf="formGroup.controls.firstName.errors && formGroup.controls.firstName.touched">
+                    <ng-container *ngIf="formGroup.controls.firstName.errors?.['required'] && formGroup.controls.firstName.touched">
+                        Field is required
+                    </ng-container>
+                    <ng-container *ngIf="formGroup.controls.firstName.errors?.['minlength'] && formGroup.controls.firstName.touched">
+                        Field minimal character is 3
+                    </ng-container>
+                </small>
+            </div>
+            <!-- NOTE Last Name -->
+            <div class="mb-3 w-full">
+                <label for="lastName" class="form-label text-start w-full block">{{ 'LAST NAME' }}</label>
+                <input 
+                    pInputText 
+                    [ngClass]="{'ng-invalid ng-dirty' : formGroup.controls.lastName.errors && formGroup.controls.lastName.touched}"
+                    formControlName="lastName" 
+                    class="w-full"
+                />
+                <small id="lastName-help" class="text-red-500 block" *ngIf="formGroup.controls.lastName.errors && formGroup.controls.lastName.touched">
+                    <ng-container *ngIf="formGroup.controls.lastName.errors?.['required'] && formGroup.controls.lastName.touched">
+                        Field is required
+                    </ng-container>
+                    <ng-container *ngIf="formGroup.controls.firstName.errors?.['minlength'] && formGroup.controls.firstName.touched">
+                        Field minimal character is 3
+                    </ng-container>
+                </small>
+            </div>
+            <!-- NOTE Email -->
+            <div class="mb-3 w-full">
+                <label for="email" class="form-label text-start w-full block">{{ 'EMAIL' }}</label>
+                <input 
+                    pInputText 
+                    [ngClass]="{'ng-invalid ng-dirty' : formGroup.controls.email.errors && formGroup.controls.email.touched}"
+                    formControlName="email" 
+                    class="w-full"
+                />
+                <small id="username-help" class="text-red-500 block" *ngIf="formGroup.controls.email.errors && formGroup.controls.email.touched">
+                    <ng-container *ngIf="formGroup.controls.email.errors?.['required'] && formGroup.controls.email.touched">
+                        Field is required
+                    </ng-container>
+                    <ng-container *ngIf="formGroup.controls.email.errors?.['email'] && formGroup.controls.email.touched">
+                        Email is not valid
+                    </ng-container>
+                </small>
+            </div>
+            <!-- NOTE Birth Date -->
+            <div class="mb-3 w-full">
+                <label for="birthDate" class="form-label text-start w-full block">{{ 'BIRTH DATE' }}</label>
+                <input 
+                    pInputText 
+                    [ngClass]="{'ng-invalid ng-dirty' : formGroup.controls.birthDate.errors && formGroup.controls.birthDate.touched}"
+                    formControlName="birthDate" 
+                    class="w-full"
+                />
+                <small id="birthDate-help" class="text-red-500 block" *ngIf="formGroup.controls.birthDate.errors && formGroup.controls.birthDate.touched">
+                    <ng-container *ngIf="formGroup.controls.birthDate.errors?.['required'] && formGroup.controls.birthDate.touched">
+                        Birth date is required
+                    </ng-container>
+                </small>
+            </div>
+            <!-- NOTE Basic Salary -->
+            <div class="mb-3 w-full">
+                <label for="basicSalary" class="form-label text-start w-full block">{{ 'BASIC SALARY' }}</label>
+                <input 
+                    pInputText 
+                    [ngClass]="{'ng-invalid ng-dirty' : formGroup.controls.basicSalary.errors && formGroup.controls.basicSalary.touched}"
+                    formControlName="basicSalary" 
+                    class="w-full"
+                />
+                <small id="basicSalary-help" class="text-red-500 block" *ngIf="formGroup.controls.basicSalary.errors && formGroup.controls.basicSalary.touched">
+                    <ng-container *ngIf="formGroup.controls.basicSalary.errors?.['required'] && formGroup.controls.basicSalary.touched">
+                        Field is required
+                    </ng-container>
+                    <ng-container *ngIf="formGroup.controls.basicSalary.errors?.['pattern'] && formGroup.controls.basicSalary.touched">
+                        Field must contain valid number
+                    </ng-container>
+                </small>
+            </div>
+            <!-- NOTE Status -->
+            <div class="mb-3 w-full">
+                <label for="status" class="form-label text-start w-full block">{{ 'STATUS' }}</label>
+                <input 
+                    pInputText 
+                    [ngClass]="{'ng-invalid ng-dirty' : formGroup.controls.status.errors && formGroup.controls.status.touched}"
+                    formControlName="status" 
+                    class="w-full"
+                />
+                <small id="status-help" class="text-red-500 block" *ngIf="formGroup.controls.status.errors && formGroup.controls.status.touched">
+                    <ng-container *ngIf="formGroup.controls.status.errors?.['required'] && formGroup.controls.status.touched">
+                        Field is required
+                    </ng-container>
+                </small>
+            </div>
+            <!-- NOTE Group -->
+            <div class="mb-3 w-full">
+                <label for="group" class="form-label text-start w-full block">{{ 'GROUP' }}</label>
+                <input 
+                    pInputText 
+                    [ngClass]="{'ng-invalid ng-dirty' : formGroup.controls.group.errors && formGroup.controls.group.touched}"
+                    formControlName="group" 
+                    class="w-full"
+                />
+                <small id="group-help" class="text-red-500 block" *ngIf="formGroup.controls.group.errors && formGroup.controls.group.touched">
+                    <ng-container *ngIf="formGroup.controls.group.errors?.['required'] && formGroup.controls.group.touched">
+                        Field is required
+                    </ng-container>
+                    <ng-container *ngIf="formGroup.controls.firstName.errors?.['minlength'] && formGroup.controls.firstName.touched">
+                        Field minimal character is 3
+                    </ng-container>
+                </small>
+            </div>
+            <!-- NOTE Description -->
+            <div class="mb-3 w-full">
+                <label for="description" class="form-label text-start w-full block">{{ 'DESCRIPTION' }}</label>
+                <textarea 
+                    rows="3"
+                    class="w-full" 
+                    [ngClass]="{'ng-invalid ng-dirty' : formGroup.controls.description.errors && formGroup.controls.description.touched}"
+                    formControlName="description" 
+                    pInputText >
+                </textarea>
+                <small id="description-help" class="text-red-500 block" *ngIf="formGroup.controls.description.errors && formGroup.controls.description.touched">
+                    <ng-container *ngIf="formGroup.controls.description.errors?.['required'] && formGroup.controls.description.touched">
+                        Description is required
+                    </ng-container>
+                </small>
+            </div>
+        </div>
+  
+        <div class="w-full flex justify-end">
+            <p-button 
+                label="Cancel" 
+                [text]="true" 
+                severity="secondary" 
+                (click)="visible = false" />
+            <p-button 
+                type="submit"
+                label="Save" 
+                [outlined]="true" 
+                severity="secondary" 
+                (click)="saveData()" />
+        </div>
+  
+    </form>
+
+    
 </p-dialog>
