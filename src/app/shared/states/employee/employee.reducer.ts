@@ -35,5 +35,22 @@ export const EmployeeReducer = createReducer(
             ...state,
             error: errorMessage,
         }
-    })
+    }),
+
+
+    // Best practice setiap edit pakai api (ini hanya simulation edit)
+    on(EmployeeActions.editEmployee, (state, { employee }) => {
+        const updatedEmployees = [...state.employees];
+        const foundIndex = state.employees.findIndex((emp) => emp._id === employee._id);
+        if (foundIndex !== -1) {
+            updatedEmployees[foundIndex] = { ...updatedEmployees[foundIndex], ...employee };
+        } else {
+            updatedEmployees.push(employee);
+        }
+        return {
+            ...state,
+            employees: updatedEmployees,
+            error: null,
+        }
+    }),
 )

@@ -6,7 +6,7 @@
         }@else {
           
             <table-component [employees]="employeesValue" [isLoading]="loading" (handleEdit)="openDialogEditEmployee($event)" (handleDelete)="openDialogDeleteEmployee($event)"/>
-            <employee-form [visible]="employeeDialogVisibility" [dataEmployee]="selectedData" (closeDialog)="closeDialogEmployee($event)"/>
+            <employee-form [visible]="employeeDialogVisibility" [dataEmployee]="selectedData" (closeDialog)="closeDialogEmployee($event)" (saveDialog)="closeDialogEmployee($event)"/>
           
         }
       </div>

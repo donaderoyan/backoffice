@@ -15,3 +15,16 @@ export const loadEmployeeFailure = createAction(
     props<{ errorMessage: string }>()
 );
 
+// Edit action
+export const editEmployee = createAction(
+    '[Employee Component] editEmployee',
+    props<{ employee: Employee }>()
+);
+export const editEmployeeSuccess = createAction(
+    '[Employee Component] editEmployeeSuccess',
+    props<{employee: Employee}>()
+);
+export const editEmployeeFailure = createAction(
+    '[Employee Component] editEmployeeFailure',
+    props<{ errorMessage: string }>()
+);

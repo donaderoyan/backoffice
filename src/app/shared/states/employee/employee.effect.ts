@@ -4,14 +4,12 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import * as EmployeeActions from './employee.action'
 import { catchError, map, of, switchMap } from 'rxjs';
 import { Store } from "@ngrx/store";
-
 @Injectable()
 export class EmployeeEffect {
 
     private api = inject(EmployeeApiService);
     action$ = inject(Actions);
     store$ = inject(Store)
-    
     // constructor(private api: EmployeeApiService, private action$: Actions) {}
 
     loadEmployee$ = createEffect(() =>
@@ -39,4 +37,5 @@ export class EmployeeEffect {
             })
         )
     );
+
 }

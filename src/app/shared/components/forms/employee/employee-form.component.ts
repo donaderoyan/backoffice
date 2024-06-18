@@ -7,18 +7,28 @@ import { Employee } from '@services/models/employee.interface';
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CalendarModule } from 'primeng/calendar';
 import { CommonModule } from '@angular/common';
+import { Store } from '@ngrx/store';
+import * as EmployeeActions from "@states/employee/employee.action"
+import { Observable } from 'rxjs';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
         
 @Component({
     selector: 'employee-form',
     templateUrl: './employee-form.component.html',
     standalone: true,
-    imports: [CommonModule, DialogModule, ReactiveFormsModule, FormsModule, ButtonModule, InputTextModule, AvatarModule, CalendarModule]
+    imports: [CommonModule, DialogModule, ReactiveFormsModule, FormsModule, ButtonModule, InputTextModule, AvatarModule, CalendarModule, ToastModule],
+    providers: [MessageService]
 })
 export class EmployeeForm implements OnInit {
     @Input() visible!: boolean | false
     @Input() dataEmployee!: Employee
 
     @Output() closeDialog = new EventEmitter()
+    @Output() saveDialog = new EventEmitter()
+
+    employees$!: Observable<Employee[]>
+    employeesValue!: Employee[]
 
     employee: Employee = {
         "_id": '',
@@ -51,7 +61,7 @@ export class EmployeeForm implements OnInit {
         description: FormControl<string>
     }>;
 
-    constructor(private fb: FormBuilder) {
+    constructor(private fb: FormBuilder, private store: Store, private messageService: MessageService) {
         // this.maxDate.setDate(this.maxDate.getDate() + 1); // today + 1
         this.initFormGroup()
     }
@@ -96,6 +106,7 @@ export class EmployeeForm implements OnInit {
 
     ngOnInit(): void {}
     onShow() {
+        this.reset()
         this.employee = this.dataEmployee;
         // this.employee.birthDate!= this.formatDate(this.dataEmployee.birthDate)
         this.initFormGroup()
@@ -109,7 +120,12 @@ export class EmployeeForm implements OnInit {
     }
 
     saveData(){
-        console.log(this.formGroup);
+        this.employee = { ...this.employee, ...this.formGroup.value };
+        if (this.formGroup.valid) {
+          this.store.dispatch(EmployeeActions.editEmployee({ employee: this.employee }));
+        }
+        this.saveDialog.emit(false);
+        this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Edit data succeed' });
     }
 
     reset() {

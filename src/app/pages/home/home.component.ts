@@ -53,7 +53,6 @@ export class HomeComponent implements OnInit {
     openDialogEditEmployee(employee: Employee) {
         this.selectedData = employee
         this.employeeDialogVisibility = true
-        console.log("edit data", this.selectedData)
     }
     closeDialogEmployee(val: any) {
         this.employeeDialogVisibility = false
