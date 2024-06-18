@@ -50,11 +50,12 @@
 		  
 		  
 				<div class="text-right">
-					<p-button [disabled]="!formGroup.valid" type="submit" size="small" label="Sign in" [outlined]="true" icon="pi pi-download" class="w-auto" />
+					<p-button [disabled]="!formGroup.valid" type="submit" size="small" label="Sign in" [outlined]="true" [icon]="isloading ? 'pi pi-spin pi-spinner' : ''" class="w-auto" />
 				</div>
 		  
 			</form>
 		
 	</p-card>
+	<p-toast />
 </div>
 
