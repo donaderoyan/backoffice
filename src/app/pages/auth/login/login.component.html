@@ -5,8 +5,8 @@
 				<h1 class="font-extrabold text-8xl mb-4">Login</h1>
 				<label for="credential">Credential</label>
 				<div id="credential" class="grid mb-4">
-					<p>email: {{credential.email}}</p>
-					<p>password: {{credential.password}}</p>
+					<p>email: {{credential.email}} <i class="pi pi-clipboard cursor-pointer" (click)="copyBtn('email')" style="font-size: 1rem"></i></p>
+					<p>password: {{credential.password}} <i class="pi pi-clipboard cursor-pointer" (click)="copyBtn('password')" style="font-size: 1rem"></i></p>
 				</div>
 			</div>
 			<!-- NOTE Login form -->

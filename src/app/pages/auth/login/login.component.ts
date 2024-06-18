@@ -60,4 +60,8 @@ export class LoginComponent implements OnInit {
             }, 2000);
         }
     }
+
+    copyBtn(prop: keyof typeof this.credential) {
+        navigator.clipboard.writeText(this.credential[prop]);
+    }
 }
