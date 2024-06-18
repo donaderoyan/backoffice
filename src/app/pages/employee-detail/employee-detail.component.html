@@ -1,0 +1,74 @@
+<app-page-layout>
+
+<p-card header="">
+    <div class="container w-full">
+        <div class="w-full flex justify-between">
+            <h1 class="font-medium text-3xl text-900 mb-3">Employee Information</h1>
+            <p-button size="small" label="Back" [outlined]="true" icon="pi pi-angle-left" (onClick)="back()" class="w-auto" />
+        </div>
+        <div class="text-500 mb-5">This section provides detailed information about the employee.</div>
+        <ul class="list-none p-0 m-0">
+            <li class="w-full align-items-center py-3 px-2 surface-border" style="border-top: 1px solid;">                
+                <div class="grid md:grid-cols-[1fr,2fr] xs:grid-cols-1 gap-4 py-5" *ngIf="employee">
+                    <div class="w-full flex justify-center">
+                        <img [src]="employee.picture.large" [alt]="employee.username" class="w-52 h-72 object-fill rounded-lg">
+                    </div>
+                    <div class="w-full grid md:grid-cols-2 xs:grid-cols-1 gap-4">
+                        <div class="w-full">
+                            <label for="username" class="text-left font-bold">Username</label>
+                            <p id="username" class="text-left">{{employee.username}}</p>
+                        </div>
+                        <div class="w-full">
+                            <label for="firstName" class="text-left font-bold">First Name</label>
+                            <p id="firstName" class="text-left">{{employee.firstName}}</p>
+                        </div>
+                        <div class="w-full">
+                            <label for="lastName" class="text-left font-bold">Last Name</label>
+                            <p id="lastName" class="text-left">{{employee.lastName}}</p>
+                        </div>
+                        <div class="w-full">
+                            <label for="email" class="text-left font-bold">Email</label>
+                            <p id="email" class="text-left">{{employee.email}}</p>
+                        </div>
+                        <div class="w-full">
+                            <label for="birthDate" class="text-left font-bold">Birth Date</label>
+                            <p id="birthDate" class="text-left">{{formatDate(employee.birthDate)}}</p>
+                        </div>
+                        <div class="w-full">
+                            <label for="basicSalary" class="text-left font-bold">Basic Salary</label>
+                            <p id="basicSalary" class="text-left">{{formatCurrency(employee.basicSalary)}}</p>
+                        </div>
+                        <div class="w-full">
+                            <label for="status" class="text-left font-bold">Status</label>
+                            <p id="status" class="text-left">{{employee.status}}</p>
+                        </div>
+                        <div class="w-full">
+                            <label for="group" class="text-left font-bold">Group</label>
+                            <p id="group" class="text-left">{{employee.group}}</p>
+                        </div>
+                        <div class="w-full">
+                            <label for="description" class="text-left font-bold">Description</label>
+                            <p id="description" class="text-left">{{employee.description}}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="w-full" *ngIf="!employee">
+                    <div class="text-300 text-center">
+                        <h2>Can't collect user data</h2>
+                    </div>
+                </div>
+            </li>
+            <li class="w-full" style="border-top: 1px solid;">
+            <div class="w-full py-5">
+                <label for="files" class="text-left font-bold">Files</label>
+                <p id="files" class="w-full flex justify-between text-left">
+                    <a href="#" target="_blank" style="color: #42b1d6;" class="mt-2">resume.pdf</a>
+                    <p-button size="small" label="Download" [outlined]="true" icon="pi pi-download" class="w-auto" />
+                </p>
+            </div>
+            </li>
+        </ul>
+    </div>
+</p-card>
+
+</app-page-layout>

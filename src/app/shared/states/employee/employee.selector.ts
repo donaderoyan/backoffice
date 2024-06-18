@@ -17,3 +17,8 @@ export const selectEmployeeError = createSelector(
     selectEmployeeFeature,
     (state: EmployeeState) => state.error
 )
+
+export const selectEmployeeById = (id: string) => createSelector(
+    selectEmployeeFeature,
+    (state: EmployeeState) => state.employees.find(employee => employee._id === id)
+)

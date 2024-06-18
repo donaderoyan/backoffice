@@ -4,10 +4,10 @@
         @if(error | async) {
           <h1>Can't get data employee {{error}}</h1>
         }@else {
-
-          <table-component [employees]="employeesValue" [isLoading]="loading" (handleEdit)="openDialogEditEmployee($event)" (handleDelete)="openDialogDeleteEmployee($event)"/>
-
-          <employee-form [visible]="employeeDialogVisibility" [dataEmployee]="selectedData" (closeDialog)="closeDialogEmployee($event)"/>
+          
+            <table-component [employees]="employeesValue" [isLoading]="loading" (handleEdit)="openDialogEditEmployee($event)" (handleDelete)="openDialogDeleteEmployee($event)"/>
+            <employee-form [visible]="employeeDialogVisibility" [dataEmployee]="selectedData" (closeDialog)="closeDialogEmployee($event)"/>
+          
         }
       </div>
   </div>

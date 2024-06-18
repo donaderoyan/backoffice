@@ -22,8 +22,8 @@
         >
         <ng-template pTemplate="caption">
             
-                <div class="flex xs:flex-wrap md:flex-nowrap md:justify-between">
-                    <p-button size="small" label="Clear" [outlined]="true" icon="pi pi-filter-slash" (click)="clear(dt1)" class="xs:w-full md:w-auto mt-2" />
+                <div class="flex xs:flex-nowrap xs:justify-between">
+                    <p-button size="small" label="Clear" [outlined]="true" icon="pi pi-filter-slash" (click)="clear(dt1)" class="md:mt-2 xs:mt-1 xs:mr-2" />
                     <span class="p-input-icon-left ml-auto p-col-12 p-md-10">
                         <i class="pi pi-search"></i>
                         <input type="text" pInputText [(ngModel)]="searchValue" placeholder="Search keyword" (input)="searchingTable(dt1, $any($event.target).value)" class="p-inputtext p-col-12 xs:w-full" />
@@ -98,9 +98,12 @@
             <tr *ngIf="isLoading === false">
                 <td *ngFor="let col of columns" class="text-center">
                     <ng-container *ngIf="col.field === 'username'">
-                        <div class="flex justify-start min-w-[120px]">
+                        <div class="flex justify-start min-w-[120px] cursor-pointer" (click)="goDetailEmployee(rowData['_id'])">
                             <div class="mr-4"><img [src]="rowData.picture.thumbnail" [alt]="rowData.username" style="border-radius: 50%; min-width: 50px; min-height: 50px;"></div>
-                            <div class="text-center ml-2 mt-3">{{ col.field === 'basicSalary' ? formatCurrency(rowData[col.field]) : rowData[col.field] }}</div>
+                            <div 
+                                class="text-center ml-2 mt-3" 
+                                [pTooltip]="'See detail of ' + rowData.username" 
+                                tooltipPosition="bottom" >{{ rowData[col.field] }} <i class="pi pi-id-card text-[#56B3FA]"></i></div>
                         </div>
                     </ng-container>
                     <ng-container *ngIf="col.field !== 'username'">

@@ -6,8 +6,8 @@ export interface Employee {
     "email": string,
     "birthDate": any,
     "basicSalary": number,
-    "status": string,
     "group": string,
+    "status": string,
     "description": string,
     "picture": {
         "large": string,

@@ -12,6 +12,8 @@ import { MultiSelectModule } from 'primeng/multiselect';
 import { ProgressBarModule } from 'primeng/progressbar';
 import { SkeletonModule } from 'primeng/skeleton';
 import { ChangeDetectorRef } from '@angular/core';
+import { Router } from '@angular/router';
+import { TooltipModule } from "primeng/tooltip";
 
 interface Column {
     field: string
@@ -28,7 +30,7 @@ interface Option {
     templateUrl: './table.component.html',
     standalone: true,
     imports: [CommonModule, FormsModule, TableModule, ButtonModule, CardModule, InputTextModule, TagModule, 
-        DropdownModule, MultiSelectModule, ProgressBarModule, SkeletonModule]
+        DropdownModule, MultiSelectModule, ProgressBarModule, SkeletonModule, TooltipModule ]
 })
 export class TableComponent implements OnInit {
     @Input() employees!: Employee[]
@@ -56,7 +58,7 @@ export class TableComponent implements OnInit {
 
     rows = 10
 
-    constructor(private changeDetectorRefs: ChangeDetectorRef) {}
+    constructor(private changeDetectorRefs: ChangeDetectorRef, private router: Router) {}
     ngOnInit(): void {
         // cache searchValue
         if (typeof window !== 'undefined') {
@@ -131,6 +133,9 @@ export class TableComponent implements OnInit {
         this.selectedStatuses = ''
         this.searchValue = ''
         this.selectedGrup = ''
+        window.sessionStorage.removeItem('searchData');
+        window.sessionStorage.removeItem('table-session');
+        
     }
     searchingTable(table: Table, val: any) {
         
@@ -160,6 +165,14 @@ export class TableComponent implements OnInit {
 
     deleteEmployee(employee: Employee) {
         this.handleDelete.emit(employee._id);
+    }
+
+    // Handle Detail Employee
+    goDetailEmployee(id: string) {
+        this.router.navigate(
+            ['/employee'],
+            { queryParams: { id: id } }
+          );
     }
     
 }

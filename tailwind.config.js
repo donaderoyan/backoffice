@@ -4,7 +4,11 @@ module.exports = {
     "./src/**/*.{html,ts}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      aspectRatio: {
+        '4:5': '4 / 5',
+      },
+    },
     screens: {
       'xs': '340px',
       // => @media (min-width: 640px) { ... }
