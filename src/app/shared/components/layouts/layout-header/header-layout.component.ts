@@ -42,6 +42,9 @@ export class HeaderLayoutComponent implements OnInit {
     logout() {
         // NOTE Redirect to login
         this.router.navigate(['/auth/login']);
+        if (typeof localStorage !== 'undefined') {
+            localStorage.removeItem('token');
+        }
     }
 
 }

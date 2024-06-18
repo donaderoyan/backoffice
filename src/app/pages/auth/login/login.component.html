@@ -1,7 +1,60 @@
-<div class="container my-3">
-    <div class="text-center">
-      <h1 class="font-bold underline px-2">Login page</h1>
-      <p-button label="Check" icon="pi pi-check"></p-button>
-    </div>
+<div class="mx-auto w-full md:max-w-[650px] xs:max-w-[350px]">
+	<p-card  class="mt-4">
+
+			<div>
+				<h1 class="font-extrabold text-8xl mb-4">Login</h1>
+				<label for="credential">Credential</label>
+				<div id="credential" class="grid mb-4">
+					<p>email: {{credential.email}}</p>
+					<p>password: {{credential.password}}</p>
+				</div>
+			</div>
+			<!-- NOTE Login form -->
+			<form [formGroup]="formGroup" (ngSubmit)="onClickSubmit()">
+		  
+				<!-- NOTE Email -->
+				<div class="mb-3 w-full">
+					<label for="email" class="form-label text-start w-full block">{{ 'EMAIL' }}</label>
+					<input 
+						pInputText 
+						[ngClass]="{'ng-invalid ng-dirty' : formGroup.controls.email.errors && formGroup.controls.email.touched}"
+						formControlName="email" 
+						class="w-full"
+					/>
+					<small id="username-help" class="text-red-500 block" *ngIf="formGroup.controls.email.errors && formGroup.controls.email.touched">
+						<ng-container *ngIf="formGroup.controls.email.errors?.['required'] && formGroup.controls.email.touched">
+							Field is required
+						</ng-container>
+						<ng-container *ngIf="formGroup.controls.email.errors?.['email'] && formGroup.controls.email.touched">
+							Email is not valid
+						</ng-container>
+					  </small>
+				</div>
+		  
+				<!-- NOTE Password -->
+				<div class="mb-3 w-full">
+					<label for="password" class="form-label text-start w-full block">{{ 'password' }}</label>
+					<input 
+						pInputText 
+						[ngClass]="{'ng-invalid ng-dirty' : formGroup.controls.password.errors && formGroup.controls.password.touched}"
+						formControlName="password" 
+						class="w-full"
+						type="password"
+					/>
+					<small id="username-help" class="text-red-500 block" *ngIf="formGroup.controls.password.errors && formGroup.controls.password.touched">
+						<ng-container *ngIf="formGroup.controls.password.errors?.['required'] && formGroup.controls.password.touched">
+							Field is required
+						</ng-container>
+					</small>
+				</div>
+		  
+		  
+				<div class="text-right">
+					<p-button [disabled]="!formGroup.valid" type="submit" size="small" label="Sign in" [outlined]="true" icon="pi pi-download" class="w-auto" />
+				</div>
+		  
+			</form>
+		
+	</p-card>
 </div>
 
