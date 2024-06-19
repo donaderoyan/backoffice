@@ -189,13 +189,11 @@ export class EmployeeForm implements OnInit {
 	addNew(){
 		this.employee = { ...this.employee, ...this.formGroup.value };
 		this.employee._id = uuidv4()
-		console.log("Add new1", this.employee)
 		this.employee.picture = {
 			large: '',
 			medium: '',
 			thumbnail: ''
 		}
-		console.log("Add new2", this.employee)
 		if (this.formGroup.valid) {
 			this.store.dispatch(EmployeeActions.editEmployee({ employee: this.employee }));
 		}
