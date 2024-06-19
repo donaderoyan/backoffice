@@ -4,7 +4,7 @@ import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { AvatarModule } from 'primeng/avatar';
 import { Employee } from '@services/models/employee.interface';
-import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CalendarModule } from 'primeng/calendar';
 import { CommonModule } from '@angular/common';
 import { Store } from '@ngrx/store';
@@ -131,19 +131,48 @@ export class EmployeeForm implements OnInit {
 		try {
 			let check = this.employee && this.employee._id ? 'ada' : 'gada';
 			let msg = this.employee && this.employee._id ? 'Add new Employee succeed' : 'Edit Employee succeed';
-			switch(check) {
-				case 'gada':
-					this.addNew();
-					break;
-				case 'ada':
-					this.edit();
-					break;
-				default:
-					break;
+			
+			if (this.formGroup.valid) {
+				switch(check) {
+					case 'gada':
+						this.addNew();
+						break;
+					case 'ada':
+						this.edit();
+						break;
+					default:
+						break;
+				}
+
+				this.saveDialog.emit(false);
+				this.messageService.add({ severity: 'success', summary: 'Success', detail: msg });
+			} else {
+				const controls: { [key: string]: AbstractControl } = {...this.formGroup.controls}
+				for (const control in controls) {
+					if (controls[control].status == 'INVALID') {
+						for (const error in controls[control].errors) {
+							switch (error) {
+								case 'required':
+									this.messageService.add({ severity: 'error', summary: 'Error', detail: `Field ${control} is required` });
+									break;
+								case 'email':
+									this.messageService.add({ severity: 'error', summary: 'Error', detail: `Field ${control} is not a valid email` });
+									break;
+								case 'minlength':
+									this.messageService.add({ severity: 'error', summary: 'Error', detail: `Field ${control} must be at least 3 characters` });
+									break;
+								case 'pattern':
+									this.messageService.add({ severity: 'error', summary: 'Error', detail: `Field ${control} must contain a valid number` });
+									break;
+								default:
+									this.messageService.add({ severity: 'error', summary: 'Error', detail: `Field ${control} has an error` });
+									break;
+							}
+						}
+					}
+				}
+
 			}
-			this.saveDialog.emit(false);
-			console.log("this.formGroup", this.formGroup)
-        	this.messageService.add({ severity: 'success', summary: 'Success', detail: msg });
 		} catch (error) {
 			// catch err _id undefined in this.dataEmployee when add new employee
 			console.error(error)
