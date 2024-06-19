@@ -79,12 +79,20 @@
             <!-- NOTE Birth Date -->
             <div class="mb-3 w-full">
                 <label for="birthDate" class="form-label text-start w-full block">{{ 'BIRTH DATE' }}</label>
-                <input 
+                <p-calendar 
+                inputId="birthDate"
+                [ngClass]="{'ng-invalid ng-dirty' : formGroup.controls.birthDate.errors && formGroup.controls.birthDate.touched}"
+                class="w-full"
+                variant="outlined"
+                dateFormat="dd/mm/yy"
+                formControlName="birthDate" />
+                <!-- <input 
                     pInputText 
+                    type="date"
                     [ngClass]="{'ng-invalid ng-dirty' : formGroup.controls.birthDate.errors && formGroup.controls.birthDate.touched}"
                     formControlName="birthDate" 
                     class="w-full"
-                />
+                /> -->
                 <small id="birthDate-help" class="text-red-500 block" *ngIf="formGroup.controls.birthDate.errors && formGroup.controls.birthDate.touched">
                     <ng-container *ngIf="formGroup.controls.birthDate.errors?.['required'] && formGroup.controls.birthDate.touched">
                         Birth date is required
@@ -102,12 +110,6 @@
                 locale="in-ID" 
                 formControlName="basicSalary"
                 class="w-full"/> 
-                <!-- <input 
-                    pInputText 
-                    [ngClass]="{'ng-invalid ng-dirty' : formGroup.controls.basicSalary.errors && formGroup.controls.basicSalary.touched}"
-                    formControlName="basicSalary" 
-                    class="w-full"
-                /> -->
                 <small id="basicSalary-help" class="text-red-500 block" *ngIf="formGroup.controls.basicSalary.errors && formGroup.controls.basicSalary.touched">
                     <ng-container *ngIf="formGroup.controls.basicSalary.errors?.['required'] && formGroup.controls.basicSalary.touched">
                         Field is required

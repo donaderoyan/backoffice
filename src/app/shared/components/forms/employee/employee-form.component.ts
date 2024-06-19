@@ -82,7 +82,7 @@ export class EmployeeForm implements OnInit {
 				disabled : false
 			}, { validators : [Validators.required, Validators.email], nonNullable : true }),
 			birthDate      : new FormControl<any>({
-				value    : this.employee ? this.employee.birthDate : '',
+				value    : new FormControl<Date | null>(this.employee.birthDate), //this.employee ? new FormControl<this.employee.birthDate>  : '',
 				disabled : false
 			}, { validators : [Validators.required], nonNullable : true }),
 			basicSalary      : new FormControl<number>({
