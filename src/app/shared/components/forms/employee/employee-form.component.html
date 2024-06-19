@@ -79,19 +79,20 @@
             <!-- NOTE Birth Date -->
             <div class="mb-3 w-full">
                 <label for="birthDate" class="form-label text-start w-full block">{{ 'BIRTH DATE' }}</label>
-                <p-calendar 
+                <!-- <p-calendar 
                 [ngClass]="{'ng-invalid ng-dirty' : formGroup.controls.birthDate.errors && formGroup.controls.birthDate.touched}"
                 class="w-full"
                 variant="outlined"
                 dateFormat="dd/mm/yy"
-                formControlName="birthDate" />
-                <!-- <input 
+                formControlName="birthDate" /> -->
+                <input 
                     pInputText 
                     type="date"
                     [ngClass]="{'ng-invalid ng-dirty' : formGroup.controls.birthDate.errors && formGroup.controls.birthDate.touched}"
-                    formControlName="birthDate" 
+                    formControlName="birthDate"
+                    [value]="employee.birthDate | date:'yyyy-MM-dd'"
                     class="w-full"
-                /> -->
+                />
                 <small id="birthDate-help" class="text-red-500 block" *ngIf="formGroup.controls.birthDate.errors && formGroup.controls.birthDate.touched">
                     <ng-container *ngIf="formGroup.controls.birthDate.errors?.['required'] && formGroup.controls.birthDate.touched">
                         Birth date is required

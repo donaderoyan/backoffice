@@ -14,6 +14,7 @@ import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import {v4 as uuidv4} from 'uuid';
 import { InputNumberModule } from 'primeng/inputnumber';
+import { DatePipe } from '@angular/common';
         
 @Component({
     selector: 'employee-form',
@@ -109,7 +110,7 @@ export class EmployeeForm implements OnInit {
     onShow() {
         this.reset()
         this.employee = this.dataEmployee;
-		this.employee = { ...this.employee, birthDate: new Date(this.employee.birthDate) }
+		this.employee = { ...this.employee, birthDate: new DatePipe('en-US').transform(this.employee.birthDate, 'dd/MM/yyyy') }
         // this.employee.birthDate!= this.formatDate(this.dataEmployee.birthDate)
         this.initFormGroup()
     }
