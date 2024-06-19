@@ -80,7 +80,6 @@
             <div class="mb-3 w-full">
                 <label for="birthDate" class="form-label text-start w-full block">{{ 'BIRTH DATE' }}</label>
                 <p-calendar 
-                inputId="birthDate"
                 [ngClass]="{'ng-invalid ng-dirty' : formGroup.controls.birthDate.errors && formGroup.controls.birthDate.touched}"
                 class="w-full"
                 variant="outlined"

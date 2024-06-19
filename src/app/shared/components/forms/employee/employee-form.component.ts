@@ -82,7 +82,7 @@ export class EmployeeForm implements OnInit {
 				disabled : false
 			}, { validators : [Validators.required, Validators.email], nonNullable : true }),
 			birthDate      : new FormControl<any>({
-				value    : new FormControl<Date | null>(this.employee.birthDate), //this.employee ? new FormControl<this.employee.birthDate>  : '',
+				value    : this.employee.birthDate, //this.employee ? new FormControl<this.employee.birthDate>  : '',
 				disabled : false
 			}, { validators : [Validators.required], nonNullable : true }),
 			basicSalary      : new FormControl<number>({
@@ -109,6 +109,7 @@ export class EmployeeForm implements OnInit {
     onShow() {
         this.reset()
         this.employee = this.dataEmployee;
+		this.employee = { ...this.employee, birthDate: new Date(this.employee.birthDate) }
         // this.employee.birthDate!= this.formatDate(this.dataEmployee.birthDate)
         this.initFormGroup()
     }
@@ -135,6 +136,7 @@ export class EmployeeForm implements OnInit {
 					break;
 			}
 			this.saveDialog.emit(false);
+			console.log("this.formGroup", this.formGroup)
         	this.messageService.add({ severity: 'success', summary: 'Success', detail: msg });
 		} catch (error) {
 			// catch err _id undefined in this.dataEmployee when add new employee
