@@ -94,12 +94,20 @@
             <!-- NOTE Basic Salary -->
             <div class="mb-3 w-full">
                 <label for="basicSalary" class="form-label text-start w-full block">{{ 'BASIC SALARY' }}</label>
-                <input 
+                <p-inputNumber 
+                [ngClass]="{'ng-invalid ng-dirty' : formGroup.controls.basicSalary.errors && formGroup.controls.basicSalary.touched}"
+                inputId="basicSalary" 
+                mode="currency" 
+                currency="IDR" 
+                locale="in-ID" 
+                formControlName="basicSalary"
+                class="w-full"/> 
+                <!-- <input 
                     pInputText 
                     [ngClass]="{'ng-invalid ng-dirty' : formGroup.controls.basicSalary.errors && formGroup.controls.basicSalary.touched}"
                     formControlName="basicSalary" 
                     class="w-full"
-                />
+                /> -->
                 <small id="basicSalary-help" class="text-red-500 block" *ngIf="formGroup.controls.basicSalary.errors && formGroup.controls.basicSalary.touched">
                     <ng-container *ngIf="formGroup.controls.basicSalary.errors?.['required'] && formGroup.controls.basicSalary.touched">
                         Field is required

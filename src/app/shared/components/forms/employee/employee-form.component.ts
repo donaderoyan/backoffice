@@ -13,12 +13,13 @@ import { Observable } from 'rxjs';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import {v4 as uuidv4} from 'uuid';
+import { InputNumberModule } from 'primeng/inputnumber';
         
 @Component({
     selector: 'employee-form',
     templateUrl: './employee-form.component.html',
     standalone: true,
-    imports: [CommonModule, DialogModule, ReactiveFormsModule, FormsModule, ButtonModule, InputTextModule, AvatarModule, CalendarModule, ToastModule],
+    imports: [CommonModule, DialogModule, ReactiveFormsModule, FormsModule, ButtonModule, InputTextModule, AvatarModule, CalendarModule, ToastModule, InputNumberModule],
     providers: [MessageService]
 })
 export class EmployeeForm implements OnInit {
