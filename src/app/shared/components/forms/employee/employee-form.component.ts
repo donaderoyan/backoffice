@@ -110,7 +110,7 @@ export class EmployeeForm implements OnInit {
     onShow() {
         this.reset()
         this.employee = this.dataEmployee;
-		this.employee = { ...this.employee, birthDate: new DatePipe('en-US').transform(this.employee.birthDate, 'dd/MM/yyyy') }
+		this.employee = { ...this.employee, birthDate: new DatePipe('en-US').transform(this.employee.birthDate, 'yyyy-MM-dd') }
         // this.employee.birthDate!= this.formatDate(this.dataEmployee.birthDate)
         this.initFormGroup()
     }

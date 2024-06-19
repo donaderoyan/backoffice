@@ -90,7 +90,7 @@
                     type="date"
                     [ngClass]="{'ng-invalid ng-dirty' : formGroup.controls.birthDate.errors && formGroup.controls.birthDate.touched}"
                     formControlName="birthDate"
-                    [value]="employee.birthDate | date:'yyyy-MM-dd'"
+                    max="{{maxDate | date:'yyyy-MM-dd'}}"
                     class="w-full"
                 />
                 <small id="birthDate-help" class="text-red-500 block" *ngIf="formGroup.controls.birthDate.errors && formGroup.controls.birthDate.touched">
