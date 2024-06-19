@@ -110,8 +110,13 @@ export class EmployeeForm implements OnInit {
     onShow() {
         this.reset()
         this.employee = this.dataEmployee;
-		this.employee = { ...this.employee, birthDate: new DatePipe('en-US').transform(this.employee.birthDate, 'yyyy-MM-dd') }
-        // this.employee.birthDate!= this.formatDate(this.dataEmployee.birthDate)
+
+		if(this.employee && this.employee._id) {
+			this.employee = { ...this.employee, birthDate: new DatePipe('en-US').transform(this.employee.birthDate, 'yyyy-MM-dd') }
+		}
+		else {
+			this.employee = {...this.employee, birthDate: new Date()}
+		}
         this.initFormGroup()
     }
     onHide() {
