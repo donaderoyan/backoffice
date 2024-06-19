@@ -12,6 +12,7 @@ import * as EmployeeActions from "@states/employee/employee.action"
 import { Observable } from 'rxjs';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
+import {v4 as uuidv4} from 'uuid';
         
 @Component({
     selector: 'employee-form',
@@ -28,7 +29,6 @@ export class EmployeeForm implements OnInit {
     @Output() saveDialog = new EventEmitter()
 
     employees$!: Observable<Employee[]>
-    employeesValue!: Employee[]
 
     employee: Employee = {
         "_id": '',
@@ -68,41 +68,41 @@ export class EmployeeForm implements OnInit {
 
     private initFormGroup() : void {
         this.formGroup = new FormGroup({
-          firstName  : new FormControl<string>({
-            value    : this.employee.firstName || '',
-            disabled : false
-          }, { validators : [Validators.required, Validators.minLength(3)], nonNullable : true }),
-          lastName  : new FormControl<string>({
-              value    :  this.employee.lastName || '',
-              disabled : false
-          }, { validators : [Validators.required, Validators.minLength(3)], nonNullable : true }),
-          email      : new FormControl<string>({
-            value    : this.employee.email || '',
-            disabled : false
-          }, { validators : [Validators.required, Validators.email], nonNullable : true }),
-          birthDate      : new FormControl<any>({
-            value    : this.employee.birthDate || '',
-            disabled : false
-          }, { validators : [Validators.required], nonNullable : true }),
-          basicSalary      : new FormControl<number>({
-            value    : this.employee.basicSalary || 0,
-            disabled : false
-          }, { validators : [Validators.required, Validators.pattern(/^\d+$/)], nonNullable : true }),
-          status      : new FormControl<string>({
-            value    : this.employee.status || '',
-            disabled : false
-          }, { validators : [Validators.required], nonNullable : true }),
-          group      : new FormControl<string>({
-            value    : this.employee.group || '',
-            disabled : false
-          }, { validators : [Validators.required, Validators.minLength(3)], nonNullable : true }),
-          description      : new FormControl<string>({
-            value    : this.employee.description || '',
-            disabled : false
-          }, { validators : [], nonNullable : true }),
+			firstName  : new FormControl<string>({
+				value    : this.employee ? this.employee.firstName :  '',
+				disabled : false
+			}, { validators : [Validators.required, Validators.minLength(3)], nonNullable : true }),
+			lastName  : new FormControl<string>({
+				value    :  this.employee ? this.employee.lastName : '',
+				disabled : false
+			}, { validators : [Validators.required, Validators.minLength(3)], nonNullable : true }),
+			email      : new FormControl<string>({
+				value    : this.employee ? this.employee.email : '',
+				disabled : false
+			}, { validators : [Validators.required, Validators.email], nonNullable : true }),
+			birthDate      : new FormControl<any>({
+				value    : this.employee ? this.employee.birthDate : '',
+				disabled : false
+			}, { validators : [Validators.required], nonNullable : true }),
+			basicSalary      : new FormControl<number>({
+				value    : this.employee ? this.employee.basicSalary : 0,
+				disabled : false
+			}, { validators : [Validators.required, Validators.pattern(/^\d+$/)], nonNullable : true }),
+			status      : new FormControl<string>({
+				value    : this.employee ? this.employee.status : '',
+				disabled : false
+			}, { validators : [Validators.required], nonNullable : true }),
+			group      : new FormControl<string>({
+				value    : this.employee ? this.employee.group : '',
+				disabled : false
+			}, { validators : [Validators.required, Validators.minLength(3)], nonNullable : true }),
+			description      : new FormControl<string>({
+				value    : this.employee ? this.employee.description : '',
+				disabled : false
+			}, { validators : [], nonNullable : true }),
             
         });
-      }
+    }
 
     ngOnInit(): void {}
     onShow() {
@@ -120,13 +120,48 @@ export class EmployeeForm implements OnInit {
     }
 
     saveData(){
-        this.employee = { ...this.employee, ...this.formGroup.value };
+		try {
+			let check = this.employee && this.employee._id ? 'ada' : 'gada';
+			let msg = this.employee && this.employee._id ? 'Add new Employee succeed' : 'Edit Employee succeed';
+			switch(check) {
+				case 'gada':
+					this.addNew();
+					break;
+				case 'ada':
+					this.edit();
+					break;
+				default:
+					break;
+			}
+			this.saveDialog.emit(false);
+        	this.messageService.add({ severity: 'success', summary: 'Success', detail: msg });
+		} catch (error) {
+			// catch err _id undefined in this.dataEmployee when add new employee
+			console.error(error)
+		}
+    }
+
+	edit() {
+		this.employee = { ...this.employee, ...this.formGroup.value };
         if (this.formGroup.valid) {
           this.store.dispatch(EmployeeActions.editEmployee({ employee: this.employee }));
         }
-        this.saveDialog.emit(false);
-        this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Edit data succeed' });
-    }
+	}
+
+	addNew(){
+		this.employee = { ...this.employee, ...this.formGroup.value };
+		this.employee._id = uuidv4()
+		console.log("Add new1", this.employee)
+		this.employee.picture = {
+			large: '',
+			medium: '',
+			thumbnail: ''
+		}
+		console.log("Add new2", this.employee)
+		if (this.formGroup.valid) {
+			this.store.dispatch(EmployeeActions.editEmployee({ employee: this.employee }));
+		}
+	}
 
     reset() {
         this.formGroup.reset()

@@ -50,12 +50,16 @@ export class HomeComponent implements OnInit {
     public ngOnInit() : void {}
 
     // handle dialog
+    openDialogNewEmployee(){
+        this.employeeDialogVisibility = true
+    }
     openDialogEditEmployee(employee: Employee) {
         this.selectedData = employee
         this.employeeDialogVisibility = true
     }
     closeDialogEmployee(val: any) {
         this.employeeDialogVisibility = false
+        this.selectedData = {} as Employee
     }
     openDialogDeleteEmployee(_id: String) {
         console.log("Delete data", _id)

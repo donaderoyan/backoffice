@@ -45,7 +45,7 @@ export const EmployeeReducer = createReducer(
         if (foundIndex !== -1) {
             updatedEmployees[foundIndex] = { ...updatedEmployees[foundIndex], ...employee };
         } else {
-            updatedEmployees.push(employee);
+            updatedEmployees.push(employee); // handle add new employee
         }
         return {
             ...state,

@@ -36,6 +36,7 @@ export class TableComponent implements OnInit {
     @Input() employees!: Employee[]
     @Input() isLoading!: boolean | true
 
+    @Output() handleNew = new EventEmitter();
     @Output() handleEdit = new EventEmitter();
     @Output() handleDelete = new EventEmitter();
 
@@ -165,6 +166,10 @@ export class TableComponent implements OnInit {
 
     deleteEmployee(employee: Employee) {
         this.handleDelete.emit(employee._id);
+    }
+
+    addEmployee() {
+        this.handleNew.emit()
     }
 
     // Handle Detail Employee

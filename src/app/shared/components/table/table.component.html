@@ -99,7 +99,9 @@
                 <td *ngFor="let col of columns" class="text-center">
                     <ng-container *ngIf="col.field === 'username'">
                         <div class="flex justify-start min-w-[120px] cursor-pointer" (click)="goDetailEmployee(rowData['_id'])">
-                            <div class="mr-4"><img [src]="rowData.picture.thumbnail" [alt]="rowData.username" style="border-radius: 50%; min-width: 50px; min-height: 50px;"></div>
+                            <div class="mr-4">
+                                <img [src]="rowData.picture.thumbnail ? rowData.picture.thumbnail : 'assets/user.ico' " [alt]="rowData.username" style="border-radius: 50%; min-width: 50px; min-height: 50px;">
+                            </div>
                             <div 
                                 class="text-center ml-2 mt-3" 
                                 [pTooltip]="'See detail of ' + rowData.username" 
@@ -134,7 +136,13 @@
             </tr>
         </ng-template>
         <ng-template pTemplate="paginatorleft">
-            <p-button type="button" icon="pi pi-plus" styleClass="p-button-text" />
+            <p-button 
+            type="button" 
+            icon="pi pi-plus" 
+            styleClass="p-button-text" 
+            pTooltip="Add Employee" 
+            tooltipPosition="bottom"
+            (click)="addEmployee()"/>
         </ng-template>
         <ng-template pTemplate="paginatorright">
             <p-button type="button" icon="pi pi-cloud" styleClass="p-button-text" />
